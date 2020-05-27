@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import UsersList from "./components/UsersList";
+import UserDetails from "./components/UserDetails";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: null
+        }
+    }
+
+    changePage = (user) => {
+        this.setState({user: user})
+    }
+
+    render() {
+        let page = <UsersList changePage={this.changePage}/>
+        if (this.state.user !== null) {
+            page = <UserDetails changePage={this.changePage} user={this.state.user}/>
+        }
+
+        return (
+            <div className="App">
+                {page}
+            </div>
+        );
+    }
 }
 
 export default App;
